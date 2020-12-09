@@ -56,9 +56,8 @@ def parse_json(data):
         for star in days[key]:
             output += star["ts_str"] + " "
             output += star["star"] + " "
-            output += star["name"] + " "
+            output += star["name"]
             output += "\n"
-        output += "\n"
     return output
 
 def main():

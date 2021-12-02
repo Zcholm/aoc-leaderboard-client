@@ -8,7 +8,7 @@ from datetime import datetime
 from operator import itemgetter
 
 def get_json(json_id, cookie):
-    json_url = "https://adventofcode.com/2020/leaderboard/private/view/{0}.json".format(json_id)
+    json_url = "https://adventofcode.com/2021/leaderboard/private/view/{0}.json".format(json_id)
 
     s = requests.Session()
     s.cookies = cookie
@@ -47,7 +47,7 @@ def parse_json(data):
                 days[day[0]] = []
             for star in day[1].items():
                 ts_str = str(datetime.fromtimestamp(int(star[1]["get_star_ts"])))
-                days[day[0]].append({"day": day[0], "name": member[1]["name"], "star": star[0], "ts_str": ts_str, "ts": star[1]["get_star_ts"]})
+                days[day[0]].append({"day": int(day[0]), "name": member[1]["name"], "star": star[0], "ts_str": ts_str, "ts": star[1]["get_star_ts"]})
 
             days[day[0]]= sorted(days[day[0]], key=itemgetter('ts'))
 
@@ -63,7 +63,7 @@ def parse_json(data):
 def main():
     parser = AP(description="Create a human friendly representation of an AdventOfCode leaderboard")
     parser.add_argument("--id", "-i", type=int, help="The ID of your private leaderboard")
-    parser.add_argument("--cookies", "-c", help="The cookie database containing your session cookie for AdventOfCode. Only tested on Firefox on Ubuntu")
+    parser.add_argument("--cookies", "-c", type=str, help="The cookie database containing your session cookie for AdventOfCode. Only tested on Firefox on Ubuntu")
 
     args = parser.parse_args()
 
